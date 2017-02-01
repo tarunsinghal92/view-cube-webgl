@@ -3,7 +3,7 @@ section {
 }
 
 body {
-    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-family: 'Avenir', 'Helvetica Neue', Arial;
     -webkit-text-size-adjust: none;
     color: #333;
     margin: 0 auto;
@@ -12,7 +12,9 @@ body {
 #view_cube {
     width: 250px;
     height: 250px;
-    margin: 0 auto;
+    position: absolute;
+    top: 0;
+    right: 100;
 }
 
 #options {
@@ -276,7 +278,7 @@ figure {
     color: #333;
     text-decoration: none;
     font-weight: 500;
-    font-family: avenir;
+    font-family: 'Avenir', 'Helvetica Neue', Arial;
     font-size: 12px;
     line-height: 32px;
     padding: 0 15px;
@@ -291,7 +293,7 @@ figure {
     color: #333;
     text-decoration: none;
     font-weight: 500;
-    font-family: avenir;
+    font-family: 'Avenir', 'Helvetica Neue', Arial;
     font-size: 12px;
     line-height: 32px;
     padding: 0 15px;

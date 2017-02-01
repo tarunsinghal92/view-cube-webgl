@@ -3,17 +3,100 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1.0, user-scalable=0">
-    <title>View Cube 2</title>
-    <link rel="stylesheet" href="./css/view_cube.css" media="screen">
+    <title>View Cube</title>
     <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script type="text/javascript" src="https://threejs.org/build/three.js"></script>
+    <script type="text/javascript" src="https://threejs.org/examples/js/controls/OrbitControls.js"></script>
+    <script type="text/javascript" src="https://threejs.org/docs/scenes/js/geometry.js"></script>
+    <script type="text/javascript" src="https://threejs.org/examples/js/renderers/Projector.js"></script>
+    <script type="text/javascript" src="https://threejs.org/examples/js/ParametricGeometries.js"></script>
+    <script type="text/javascript" src="https://threejs.org/examples/js/libs/dat.gui.min.js"></script>
+    <style>
+        .dg.ac {
+            display: none;
+        }
+    </style>
 </head>
 
 <body>
+    <script>
+        var gui = new dat.GUI();
+        var camera, scene, renderer, mesh;
+        init();
+        animate();
+
+        function init() {
+            camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 10000);
+            camera.position.z = 30;
+
+            scene = new THREE.Scene();
+
+            // world
+            mesh = new THREE.Object3D();
+            mesh.add(new THREE.LineSegments(
+                new THREE.Geometry(),
+                new THREE.LineBasicMaterial({
+                    color: 0xffffff,
+                    transparent: true,
+                    opacity: 0.5
+                })
+            ));
+
+            mesh.add(new THREE.Mesh(
+                new THREE.Geometry(),
+                new THREE.MeshPhongMaterial({
+                    color: 0x156289,
+                    emissive: 0x072534,
+                    side: THREE.DoubleSide,
+                    shading: THREE.FlatShading
+                })
+            ));
+            var options = chooseFromHash(mesh);
+            // mesh.rotation.x = -1.57;
+            scene.add(mesh);
+
+            // lights
+            light = new THREE.DirectionalLight(0xffffff);
+            light.position.set(1, 1, 1);
+            scene.add(light);
+
+            light = new THREE.DirectionalLight(0x002288);
+            light.position.set(-1, -1, -1);
+            scene.add(light);
+
+            light = new THREE.AmbientLight(0x222222);
+            scene.add(light);
+
+            // renderer
+            renderer = new THREE.WebGLRenderer({
+                antialias: false
+            });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setClearColor(0x000000);
+            renderer.domElement.id = 'cad-zone';
+            document.body.appendChild(renderer.domElement);
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            renderer.render(scene, camera);
+        }
+
+        function rotate_cad(rotationVector) {
+            mesh.rotation.x = rotationVector.x;
+            mesh.rotation.y = rotationVector.y;
+            mesh.rotation.z = rotationVector.z;
+        }
+    </script>
     <script src="./js/view_cube.js"></script>
     <script>
         document.onreadystatechange = function() {
             if (document.readyState === 'complete') {
-                ViewCube.init();
+                ViewCube.init({
+                    'is_draggable': false,
+                    'rotation_angle': 30,
+                });
                 console.log(ViewCube.get_data());
             }
         };

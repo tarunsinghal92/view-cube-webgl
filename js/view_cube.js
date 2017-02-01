@@ -10,6 +10,9 @@ var ViewCube = ViewCube || {};
 ViewCube = (function() {
     'use_strict';
 
+    // default rotation on every click event
+    var configuration = {};
+
     // variable to store rotation of view cube
     var angle = {
         x: 0,
@@ -27,25 +30,50 @@ ViewCube = (function() {
     // default rotation on every click event
     var rotation_angle = 30;
 
+    // is draggable or not
+    var is_draggable = false;
+
     // main setup
-    var setup = function() {
+    var setup = function(config = {}) {
+
+        //set configuration
+        set_configuration(config);
 
         //prepare & append the dube dom in html
-        $('body').html(get_viewcube_html());
+        $('body').append(get_viewcube_html());
 
         //event handlers arrows
         $('#controls [class*=rotate]').click(rotate_click_events);
 
         //event handlers for views
         $('#view_dropdown_container .vc_views li, #cube figure').click(set_view);
+
+        //set drag/drop
+        if (is_draggable) $('#view_cube').draggable();
     }
 
-    // return required information
+    /**
+     * return required information
+     */
     function get_viewcube_data() {
         return {
-            current_angle : angle,
-            delta_angle : delta_angle
+            current_angle: angle,
+            delta_angle: delta_angle,
+            configuration: configuration
         };
+    }
+
+    /**
+     * set configuration
+     */
+    function set_configuration(config) {
+        configuration = config;
+        if (typeof config.rotation_angle !== 'undefined') {
+            rotation_angle = config.rotation_angle;
+        }
+        if (typeof config.is_draggable !== 'undefined') {
+            is_draggable = config.is_draggable;
+        }
     }
 
     /**
@@ -154,7 +182,8 @@ ViewCube = (function() {
      * get html
      */
     function get_viewcube_html() {
-        var html = '<div id="view_cube"> \
+        var html = '<link rel="stylesheet" href="./css/view_cube.css" media="screen"> \
+                    <div id="view_cube"> \
                     <section id="controls"> \
                         <div class="rotate-x-cw"></div> \
                         <div class="rotate-x-acw"></div> \
@@ -202,10 +231,10 @@ ViewCube = (function() {
 
     // PUBLIC INTERFACE
     return {
-        init: function() {
-            setup();
+        init: function(config) {
+            setup(config);
         },
-        get_data: function () {
+        get_data: function() {
             return get_viewcube_data();
         }
     };
