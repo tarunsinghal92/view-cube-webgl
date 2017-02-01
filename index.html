@@ -1,0 +1,23 @@
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=0">
+    <title>View Cube 2</title>
+    <link rel="stylesheet" href="./css/view_cube.css" media="screen">
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+</head>
+
+<body>
+    <script src="./js/view_cube.js"></script>
+    <script>
+        document.onreadystatechange = function() {
+            if (document.readyState === 'complete') {
+                ViewCube.init();
+                console.log(ViewCube.get_data());
+            }
+        };
+    </script>
+</body>
+
+</html>
