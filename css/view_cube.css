@@ -51,10 +51,10 @@ figure {
     -moz-transition: -moz-transform 1s;
     -o-transition: -o-transform 1s;
     transition: transform 1s;
-    -webkit-transform: rotateX( -30deg) rotateY( 45deg) rotateZ( 0deg);
+    /*-webkit-transform: rotateX( -30deg) rotateY( 45deg) rotateZ( 0deg);
     -moz-transform: rotateX( -30deg) rotateY( 45deg) rotateZ( 0deg);
     -o-transform: rotateX( -30deg) rotateY( 45deg) rotateZ( 0deg);
-    transform: rotateX( -30deg) rotateY( 45deg) rotateZ( 0deg);
+    transform: rotateX( -30deg) rotateY( 45deg) rotateZ( 0deg);*/
 }
 
 #cube figure {

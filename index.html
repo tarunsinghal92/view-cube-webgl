@@ -12,6 +12,8 @@
     <script type="text/javascript" src="https://threejs.org/examples/js/renderers/Projector.js"></script>
     <script type="text/javascript" src="https://threejs.org/examples/js/ParametricGeometries.js"></script>
     <script type="text/javascript" src="https://threejs.org/examples/js/libs/dat.gui.min.js"></script>
+    <script type="text/javascript" src="https://threejs.org/examples/js/libs/stats.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tween.js/16.3.5/Tween.min.js"></script>
     <style>
         .dg.ac {
             display: none;
@@ -20,87 +22,8 @@
 </head>
 
 <body>
-    <script>
-        var gui = new dat.GUI();
-        var camera, scene, renderer, mesh;
-        init();
-        animate();
-
-        function init() {
-            camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 10000);
-            camera.position.z = 30;
-
-            scene = new THREE.Scene();
-
-            // world
-            mesh = new THREE.Object3D();
-            mesh.add(new THREE.LineSegments(
-                new THREE.Geometry(),
-                new THREE.LineBasicMaterial({
-                    color: 0xffffff,
-                    transparent: true,
-                    opacity: 0.5
-                })
-            ));
-
-            mesh.add(new THREE.Mesh(
-                new THREE.Geometry(),
-                new THREE.MeshPhongMaterial({
-                    color: 0x156289,
-                    emissive: 0x072534,
-                    side: THREE.DoubleSide,
-                    shading: THREE.FlatShading
-                })
-            ));
-            var options = chooseFromHash(mesh);
-            // mesh.rotation.x = -1.57;
-            scene.add(mesh);
-
-            // lights
-            light = new THREE.DirectionalLight(0xffffff);
-            light.position.set(1, 1, 1);
-            scene.add(light);
-
-            light = new THREE.DirectionalLight(0x002288);
-            light.position.set(-1, -1, -1);
-            scene.add(light);
-
-            light = new THREE.AmbientLight(0x222222);
-            scene.add(light);
-
-            // renderer
-            renderer = new THREE.WebGLRenderer({
-                antialias: false
-            });
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            renderer.setClearColor(0x000000);
-            renderer.domElement.id = 'cad-zone';
-            document.body.appendChild(renderer.domElement);
-        }
-
-        function animate() {
-            requestAnimationFrame(animate);
-            renderer.render(scene, camera);
-        }
-
-        function rotate_cad(rotationVector) {
-            mesh.rotation.x = rotationVector.x;
-            mesh.rotation.y = rotationVector.y;
-            mesh.rotation.z = rotationVector.z;
-        }
-    </script>
     <script src="./js/view_cube.js"></script>
-    <script>
-        document.onreadystatechange = function() {
-            if (document.readyState === 'complete') {
-                ViewCube.init({
-                    'is_draggable': false,
-                    'rotation_angle': 30,
-                });
-                console.log(ViewCube.get_data());
-            }
-        };
-    </script>
+    <script src="./js/cad.js"></script>
 </body>
 
 </html>

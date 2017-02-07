@@ -19,6 +19,11 @@ ViewCube = (function() {
         y: 0,
         z: 0
     };
+    // var angle = {
+    //     x: -30,
+    //     y: 45,
+    //     z: 0
+    // };
 
     //change in angles
     var delta_angle = {
@@ -117,12 +122,15 @@ ViewCube = (function() {
         angle.z = z;
 
         //store delta angle [new - old]
-        delta_angle.x = angle.x - old_angle.x;
-        delta_angle.y = angle.y - old_angle.y;
-        delta_angle.z = angle.z - old_angle.z;
+        delta_angle.x = old_angle.x - angle.x;
+        delta_angle.y = old_angle.y - angle.y;
+        delta_angle.z = old_angle.z - angle.z;
 
         //rotate
         rotate_cube(angle);
+
+        //its the time for callback
+        configuration.callback(get_viewcube_data());
     }
 
     /**
@@ -239,3 +247,14 @@ ViewCube = (function() {
         }
     };
 })();
+
+//launch view cube
+document.onreadystatechange = function() {
+    if (document.readyState === 'complete') {
+        ViewCube.init({
+            'is_draggable': false,
+            'rotation_angle': 30,
+            'callback': change_cad_camera
+        });
+    }
+};
